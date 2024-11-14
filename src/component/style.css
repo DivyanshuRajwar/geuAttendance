@@ -1,0 +1,13 @@
+.Active_SideBar{
+    background: 45AA40;
+    border-radius: 9999px;
+    width: 175px;
+    height: 45px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left:1.25rem;
+}
+.white{
+    color: #fff;
+}
