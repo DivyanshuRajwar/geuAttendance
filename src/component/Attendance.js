@@ -10,7 +10,7 @@ function Attendance() {
     const [classId, setClassId] = useState('');
     const [teacherId, setTeacherId] =useState('');
     const [isGenerated, setIsGenerated] = useState(false);
-    const [timeLeft, setTimeLeft] = useState(100);
+    
     const today = new Date().toISOString().split('T')[0];
     const { user  } = useContext(AuthContext)
     const handleGenerate =  async(event) => {
@@ -32,7 +32,8 @@ function Attendance() {
             formattedDate
         }
         try{
-            const respond = await axios.post('http://localhost:3000/submit-teacher-data',attendanceData);
+            const respond = await axios.post('https://server-vpgh.onrender.com/submit-teacher-data',attendanceData);
+            // const respond = await axios.post('http://localhost:3000/submit-teacher-data',attendanceData);
             console.log("Data submission sucessfully" ,respond)
         
         }catch(error){
@@ -44,16 +45,25 @@ function Attendance() {
     };
 
 
-
+    const [timeLeft, setTimeLeft] = useState(240);//set in  second 
     useEffect(() => {
         if (isGenerated && timeLeft > 0) {
             const timer = setInterval(() => {
                 setTimeLeft((prev) => prev - 1);
+                console.log(timeLeft)
             }, 1000);
             return () => clearInterval(timer);
         }
     }, [isGenerated, timeLeft]);
-    
+    const formatTime = (seconds) => {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    };
+    const handleEndAttendance = () => {
+        setIsGenerated(false);
+        setTimeLeft(240);
+    };
     useEffect(()=>{
         let c_id=`${course}${semester}${section}`;
         c_id = c_id.toUpperCase();
@@ -62,16 +72,8 @@ function Attendance() {
       setTeacherId(user.teacherId);
     },[course,semester,section,user.teacherId])
     
-    const handleEndAttendance = () => {
-        setIsGenerated(false);
-        setTimeLeft(300);
-    };
-
-    const formatTime = (seconds) => {
-        const mins = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-    };
+    
+    
     const[writingCourse, setWritingCourse]= useState(false);
     const[writingClassId, setWritingClassId]= useState(false);
     const handleCourse = (e) =>{
@@ -190,7 +192,7 @@ function Attendance() {
                     // Qr Genratore
                     <div className="text-center flex flex-col items-center space-y-4">
                         {/* QR Code */}
-                        <QRCodeCanvas value="http://localhost:3002/" size={200} />
+                        <QRCodeCanvas value="https://student-flax.vercel.app/student-attendance" size={200} />
                         {/* Timer */}
                         <p className="text-lg font-semibold text-gray-700">{`Time Remaining: ${formatTime(timeLeft)}`}</p>
                         {/* End Attendance Button */}

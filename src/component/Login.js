@@ -9,21 +9,23 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    console.log("Idhhr hu")
     try {
       const loginData = {
         usernameOrEmail,
         password,
       };
       const response = await axios.post(
-        "http://localhost:3000/teacher-login-form",
+        "https://server-vpgh.onrender.com/teacher-login-form",
         loginData
       );
+      // const response = await axios.post(
+      //   "http://localhost:3000/teacher-login-form",
+      //   loginData
+      // );
 
       // Check if login was successful
       if (response.status === 200) {
-        // If login is successful, call login() to update the context state
-        console.log(response.userData)
         login(response.data.userData);
         navigate('/profile')
       } else {
@@ -40,9 +42,9 @@ const LoginForm = () => {
         alert("An error occurred during login. Please try again.");
       }
       };
-  // if (isAuthenticated) {
-  //   navigate("/profile");
-  // }
+  if (isAuthenticated) {
+    navigate("/profile");
+  }
 }
 
   return (

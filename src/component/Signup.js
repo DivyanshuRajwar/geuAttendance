@@ -10,7 +10,7 @@ function Signup() {
   const [teacherId, setTeacherId] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  // Generate a unique 4-digit ID
+
   useEffect(() => {
     const generateTeacherId = () => {
       return Math.floor(1000 + Math.random() * 9000).toString(); 
@@ -38,7 +38,11 @@ function Signup() {
       password
     };
     try {
-      const response = await axios.post('http://localhost:3000/teacher-signup-form', signupData);
+      // const response = await axios.post('http://localhost:3000/teacher-signup-form', signupData);
+      const response = await axios.post(
+        "https://server-vpgh.onrender.com/teacher-signup-form",
+        signupData
+      );
       console.log(response.data);
       alert("Registration successful! Teacher ID: " + teacherId);
     } catch (error) {

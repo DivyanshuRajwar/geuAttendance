@@ -7,6 +7,7 @@ import Attendance from './Attendance';
 import Document from './Document';
 import View from './View';
 import { AuthContext } from '../context/AuthContext';
+import LoginSIgnup from './LoginSIgnup';
 
 function CenterDiv() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -17,29 +18,28 @@ function CenterDiv() {
         {/* Default Route */}
         <Route
           path="/"
-          element={isAuthenticated ? <Navigate to="/profile" /> : <Navigate to="/login" />}
+          element={isAuthenticated ? <Navigate to="/profile" /> : <Navigate to="/LoginSIgnup" /> }
         />
 
         {/* Public Routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/LoginSIgnup" element={<LoginSIgnup />} />
 
         {/* Protected Routes */}
         <Route
           path="/profile"
-          element={isAuthenticated ? <Profile /> : <Navigate to="/login" />}
+          element={isAuthenticated ? <Profile /> : <Navigate to="/LoginSIgnup" />}
         />
         <Route
           path="/attendance"
-          element={isAuthenticated ? <Attendance /> : <Navigate to="/login" />}
+          element={isAuthenticated ? <Attendance /> : <Navigate to="/LoginSIgnup" />}
         />
         <Route
           path="/document"
-          element={isAuthenticated ? <Document /> : <Navigate to="/login" />}
+          element={isAuthenticated ? <Document /> : <Navigate to="/LoginSIgnup" />}
         />
         <Route
           path="/view-attendance"
-          element={isAuthenticated ? <View /> : <Navigate to="/login" />}
+          element={isAuthenticated ? <View /> : <Navigate to="/LoginSIgnup" />}
         />
       </Routes>
     </div>

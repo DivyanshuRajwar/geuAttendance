@@ -41,9 +41,12 @@ function View() {
       setIsLoading(true); // Start loading
       console.log('Fetching attendance data...');
       console.log(AttData)
-      const res = await axios.get('http://localhost:3000/get-attendance', {
+      const res = await axios.get('https://server-vpgh.onrender.com/get-attendance', {
         params: AttData,
       });
+      // const res = await axios.get('http://localhost:3000/get-attendance', {
+      //   params: AttData,
+      // });
 
       console.log('Response data:', res.data); // Check the response
       if (Array.isArray(res.data)) {

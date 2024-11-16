@@ -3,17 +3,22 @@ import React, { createContext, useState, useEffect } from 'react';
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  // Initialize isAuthenticated based on localStorage
-  const storedUser = JSON.parse(localStorage.getItem('user'));
-  const [isAuthenticated, setIsAuthenticated] = useState(!!storedUser);
-  const [user, setUser] = useState(storedUser);
+  // Initialize isAuthenticated and user state with error handling
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    if (storedUser) {
-      setUser(storedUser);
-      setIsAuthenticated(true);
+    try {
+      const storedUser = JSON.parse(localStorage.getItem('user'));
+      if (storedUser) {
+        setUser(storedUser);
+        setIsAuthenticated(true);
+      }
+    } catch (error) {
+      console.error("Error parsing user data from localStorage:", error);
+      localStorage.removeItem('user'); // Clear invalid data
     }
-  }, []);
+  }, [setIsAuthenticated]);
 
   const login = (userData) => {
     setUser(userData);
