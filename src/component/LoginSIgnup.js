@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from 'react-toastify';
 function LoginSignup() {
   // State for Login
   const [usernameOrEmail, setUsernameOrEmail] = useState("");
@@ -44,24 +44,25 @@ function LoginSignup() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
+      // const response = await axios.post(
+      //   "https://server-vpgh.onrender.com/teacher-login-form",
+      //   { usernameOrEmail, password }
+      // );
       const response = await axios.post(
-        "https://server-vpgh.onrender.com/teacher-login-form",
+        "http://localhost:3000/teacher-login-form",
         { usernameOrEmail, password }
       );
 
       if (response.status === 200) {
         login(response.data.userData);
         navigate("/profile");
+        toast.success("🔑 Welcome back! You've successfully logged in.");
+
       } else {
-        alert("Login failed. Please try again.");
+        toast.error("🚫 Invalid credentials. Please check your username or password.");
       }
     } catch (error) {
-      if (error.response && error.response.status === 400) {
-        alert(error.response.data.message);
-      } else {
-        console.error("Login error:", error.message);
-        alert("An unexpected error occurred during login.");
-      }
+      toast.error("🚫 Invalid credentials. Please check your username or password.");
     }
   };
 
@@ -89,14 +90,16 @@ function LoginSignup() {
         signupData
       );
       if (response.status === 201) {
-        alert("Registration successful! Your Teacher ID: " + teacherId);
-        setToggleLoginSignup(true); // Switch to login after successful signup
+        toast.success("🎉 You're all set! Welcome aboard")
+        setToggleLoginSignup(true); 
+        
       } else {
-        alert("Signup failed. Please try again.");
+        toast.error("Oops! Something went wrong. Please try again.");
       }
     } catch (error) {
-      console.error("Signup error:", error);
-      alert("An error occurred during registration. Please try again.");
+      // console.error("Signup error:", error);
+    //   alert("An error occurred during registration. Please try again.");
+    toast.error("Oops! Something went wrong. Please try again.");
     }
   };
 
@@ -105,7 +108,7 @@ function LoginSignup() {
   const toggleForm = (event) => {
     event.preventDefault()
     setToggleLoginSignup((prev) => !prev);
-    console.log(toggleLoginSignup);
+    // console.log(toggleLoginSignup);
   };
 
   return (

@@ -13,6 +13,11 @@ function View() {
     let CId = e.target.value.toUpperCase();
     setClassId(CId);
   };
+  const handleSubject =(e)=>{
+    e.preventDefault();
+    let sCode = e.target.value.toUpperCase();
+    setSubject(sCode);
+  }
 
   const convertToDbFormat = (dateString) => {
     const date = new Date(dateString);
@@ -41,12 +46,12 @@ function View() {
       setIsLoading(true); // Start loading
       console.log('Fetching attendance data...');
       console.log(AttData)
-      const res = await axios.get('https://server-vpgh.onrender.com/get-attendance', {
-        params: AttData,
-      });
-      // const res = await axios.get('http://localhost:3000/get-attendance', {
+      // const res = await axios.get('https://server-vpgh.onrender.com/get-attendance', {
       //   params: AttData,
       // });
+      const res = await axios.get('http://localhost:3000/get-attendance', {
+        params: AttData,
+      });
 
       console.log('Response data:', res.data); // Check the response
       if (Array.isArray(res.data)) {
@@ -85,7 +90,7 @@ function View() {
             type="text"
             placeholder="Subject (e.g., Java, C++)"
             value={subject}
-            onChange={(e) => setSubject(e.target.value)}
+            onChange={handleSubject}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-green-200"
           />
           <button
@@ -116,9 +121,9 @@ function View() {
             students.map((student, index) => (
               <div key={index} className="w-full flex justify-between text-center text-gray-900   ">
                 <span className="w-1/5 text-black ">{student.RollNo}</span>
-                <span className="w-1/5">{student.Name}</span>
+                <span className="w-1/5">{student.fullName}</span>
                 <span className="w-1/5">{student.ClassId}</span>
-                <span className="w-1/5">{student.Subject}</span>
+                <span className="w-1/5">{student.subjectCode}</span>
                 <span className="w-1/5">{student.Date}</span>
               </div>
             ))

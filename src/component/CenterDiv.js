@@ -1,7 +1,5 @@
 import React, { useContext } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import Signup from './Signup';
-import Login from './Login';
 import Profile from './Profile';
 import Attendance from './Attendance';
 import Document from './Document';

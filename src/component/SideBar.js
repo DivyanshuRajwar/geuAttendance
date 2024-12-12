@@ -30,19 +30,16 @@ const optionRoutes = {
 
 useEffect(()=>{
     navigate(activeRoute);
-    console.log(activeRoute)
 },[activeOption])
 const handleOptionClick = (option) => {
     setActiveOption(option.label);
     const route = optionRoutes[option.label];
-    console.log(route);
     if (route) {
         setActiveRoute(route);
-       console.log(activeRoute)
     }
 };
 return (
-    <div className="w-[18%] h-screen bg-[#FCFCFC] flex flex-col gap-[2.8rem] items-center pt-[0.75rem]">
+    <div className="w-[18%] h-screen bg-[#F2E9E0] flex flex-col gap-[2.8rem] items-center pt-[0.75rem]">
       <img src={Logo} alt="logo" className="w-[6.5rem] h-[6.5rem]" />
       <div className="flex flex-col space-y-[2rem]">
         {options.map((option) => (

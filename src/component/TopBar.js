@@ -38,7 +38,7 @@ function TopBar() {
     navigate('/');
   }
   return (
-    <div className="w-full h-[11vh] flex items-center bg-[#CFE9D0] pl-[1.25rem]">
+    <div className="w-full h-[11vh] flex items-center bg-[#CFE9D0]  pl-[1.25rem]">
       <div className="w-1/2 h-[70%] flex gap-[1.25rem] items-center">
         <div className="flex items-center bg-[#FCFCFC] w-[20rem] h-full rounded-full pl-[1.5rem] gap-[1rem]">
           <Search />
@@ -84,7 +84,7 @@ function TopBar() {
             </div>
           )}
         </div>
-        <div className=" h-full min-w-[10rem] bg-[#FCFCFC] flex items-center justify-between rounded-full ml-[6rem] px-4 relative ">
+        <div className=" h-full min-w-[10rem] bg-[#FCFCFC] flex items-center justify-between rounded-full ml-[14rem] px-4 relative ">
           {/* Username */}
           <div className=" min-w-[4rem]   text-right  absolute left-3 ">
             <span>{user ? user.firstName : "Guest"}</span>
