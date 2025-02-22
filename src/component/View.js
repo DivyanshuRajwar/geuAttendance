@@ -21,8 +21,8 @@ function View() {
 
   const convertToDbFormat = (dateString) => {
     const date = new Date(dateString);
-    const day = ("0" + date.getDate()).slice(-2);
-    const month = ("0" + (date.getMonth() + 1)).slice(-2);
+    const day = date.getDate(); 
+    const month = date.getMonth() + 1;
     const year = date.getFullYear();
     return `${day}${month}${year}`;
   };
@@ -45,24 +45,31 @@ function View() {
     try {
       setIsLoading(true); // Start loading
       console.log('Fetching attendance data...');
-      console.log(AttData)
-      // const res = await axios.get('https://server-vpgh.onrender.com/get-attendance', {
-      //   params: AttData,
-      // });
+      console.log(AttData);
+      
+      // Send GET request with query parameters
       const res = await axios.get('http://localhost:3000/get-attendance', {
         params: AttData,
       });
-
-      console.log('Response data:', res.data); // Check the response
-      if (Array.isArray(res.data)) {
-        setStudents(res.data); // Update students with fetched data
+    
+      console.log('Response data:', res.data);
+    
+      // Handle different status codes
+      if (res.status === 200) {
+        if (Array.isArray(res.data)) {
+          setStudents(res.data); // Update state with fetched data
+        } else {
+          console.error('Unexpected response format:', res.data);
+        }
+      } else if (res.status === 404) {
+        console.warn(res.data.message); // No attendance data found
       } else {
-        console.log('Unexpected response format:', res.data);
+        console.error('Unexpected status:', res.status);
       }
     } catch (error) {
-      console.log("Error in getting Attendance:", error);
+      console.error("Error in getting Attendance:", error);
     } finally {
-      setIsLoading(false); // End loading
+      setIsLoading(false); // Stop loading
     }
   };
 
